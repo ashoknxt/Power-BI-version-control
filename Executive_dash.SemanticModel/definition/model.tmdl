@@ -1,0 +1,32 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Budget","BudgetPeriod","Calendar","Customers","dimProductCategory","dimProductSubCategory","Products","Sales","Territory"]
+
+annotation PBI_ProTooling = ["DevMode","TMDLView_Desktop"]
+
+ref table Budget
+ref table BudgetPeriod
+ref table Calendar
+ref table DateTableTemplate_99b88117-dd07-40ae-92ff-62b3f2891716
+ref table Customers
+ref table LocalDateTable_46b9f6e5-b44e-4620-8ec6-fc94525c833e
+ref table LocalDateTable_1ef8113e-059f-4d44-b337-f9889f313db5
+ref table dimProductCategory
+ref table dimProductSubCategory
+ref table Products
+ref table LocalDateTable_0c309d80-018b-442f-982c-494372d6f36f
+ref table LocalDateTable_ebe4d085-c7f4-4d3a-a665-bb9805baeb82
+ref table Sales
+ref table Territory
+
+ref cultureInfo en-US
+

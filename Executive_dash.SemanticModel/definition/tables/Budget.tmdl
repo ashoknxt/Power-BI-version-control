@@ -1,0 +1,42 @@
+table Budget
+	lineageTag: 62ead0c9-03a2-444d-9111-92ecc96f160a
+
+	column Category
+		dataType: string
+		lineageTag: 023c24bc-a333-414c-ad79-e56b2fc7fc06
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget
+		dataType: int64
+		formatString: 0
+		lineageTag: 60bc755b-3649-49cc-8d46-008750f698be
+		summarizeBy: sum
+		sourceColumn: Budget
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period
+		dataType: int64
+		formatString: 0
+		lineageTag: ecd72c67-2fb9-427f-9b49-f0d667412a17
+		summarizeBy: none
+		sourceColumn: Period
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Budget = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+				    Budget_Sheet = Source{[Item="Budget",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Budget_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Category", type text}, {"Budget", Int64.Type}, {"Period", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

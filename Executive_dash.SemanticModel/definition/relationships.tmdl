@@ -1,0 +1,48 @@
+relationship 1bc0e1b0-5924-4d3f-b078-080afac250e2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customers.BirthDate
+	toColumn: LocalDateTable_46b9f6e5-b44e-4620-8ec6-fc94525c833e.Date
+
+relationship 7029fb61-d0e1-4264-9a55-e40429da8667
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Customers.DateFirstPurchase
+	toColumn: LocalDateTable_1ef8113e-059f-4d44-b337-f9889f313db5.Date
+
+relationship 1ce8c769-2205-4203-bb63-1d991cd29e9f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Products.StartDate
+	toColumn: LocalDateTable_0c309d80-018b-442f-982c-494372d6f36f.Date
+
+relationship 9ce54088-f9f6-433f-9597-e3d17aaa2453
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Products.EndDate
+	toColumn: LocalDateTable_ebe4d085-c7f4-4d3a-a665-bb9805baeb82.Date
+
+relationship AutoDetected_048b621c-9213-4325-9813-eb1122efa20d
+	fromColumn: Budget.Period
+	toColumn: BudgetPeriod.Period
+
+relationship AutoDetected_8164c1f8-30e8-47e3-bd0b-01e7ddcd6b77
+	fromColumn: Calendar.Period
+	toColumn: BudgetPeriod.Period
+
+relationship AutoDetected_5c8e605b-47b0-42ef-b771-3c4c8a1293b9
+	fromColumn: Sales.CustomerKey
+	toColumn: Customers.CustomerKey
+
+relationship AutoDetected_061614b3-1b78-4cfa-b7bf-40f385aa0187
+	fromColumn: dimProductSubCategory.ProductCategoryKey
+	toColumn: dimProductCategory.ProductCategoryKey
+
+relationship AutoDetected_69f459fa-7215-41ed-b4cb-9ff2f6cb03a1
+	fromColumn: Products.ProductSubcategoryKey
+	toColumn: dimProductSubCategory.ProductSubcategoryKey
+
+relationship AutoDetected_b01714f4-988b-4dd4-8c80-6c56eca988ea
+	fromColumn: Sales.ProductKey
+	toColumn: Products.ProductKey
+
+relationship d0e2ce35-ee2b-e3b0-8cff-39bec869e9bd
+	fromColumn: Sales.OrderDate
+	toColumn: Calendar.Date
+

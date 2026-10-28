@@ -1,0 +1,213 @@
+table Products
+	lineageTag: ae60145f-2ff8-46a9-85bb-a2b3e8cd0220
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: be09dbd1-1324-497c-b221-5423c8a49665
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductSubcategoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 49bf136c-379e-45d3-8b46-9156818ee5c3
+		summarizeBy: none
+		sourceColumn: ProductSubcategoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductName
+		dataType: string
+		lineageTag: bf5455e1-a0da-4561-9db3-8c88af7d6d50
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StandardCost
+		dataType: double
+		lineageTag: a7d3bdb5-5dd2-4974-8af9-ba5f31f1f87f
+		summarizeBy: sum
+		sourceColumn: StandardCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Color
+		dataType: string
+		lineageTag: 2b547b8e-6b48-4a7a-b720-912acff06221
+		summarizeBy: none
+		sourceColumn: Color
+
+		annotation SummarizationSetBy = Automatic
+
+	column SafetyStockLevel
+		dataType: int64
+		formatString: 0
+		lineageTag: d6733ef9-6734-4cc5-87b7-e825f2801441
+		summarizeBy: sum
+		sourceColumn: SafetyStockLevel
+
+		annotation SummarizationSetBy = Automatic
+
+	column ListPrice
+		dataType: double
+		lineageTag: 2b482d91-5474-49ba-80e6-86f0bf1164cd
+		summarizeBy: sum
+		sourceColumn: ListPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Size
+		dataType: int64
+		formatString: 0
+		lineageTag: 4d4342b3-9c7e-4176-93fe-0b450cfffa71
+		summarizeBy: sum
+		sourceColumn: Size
+
+		annotation SummarizationSetBy = Automatic
+
+	column SizeRange
+		dataType: string
+		lineageTag: 201a0f39-98eb-41b4-af41-f8b24542eef8
+		summarizeBy: none
+		sourceColumn: SizeRange
+
+		annotation SummarizationSetBy = Automatic
+
+	column Weight
+		dataType: double
+		lineageTag: 304ab3bf-1e5c-4dab-8acb-ccae2229362b
+		summarizeBy: sum
+		sourceColumn: Weight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DaysToManufacture
+		dataType: int64
+		formatString: 0
+		lineageTag: 44054725-3197-4443-8ffe-80123babb8b4
+		summarizeBy: sum
+		sourceColumn: DaysToManufacture
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductLine
+		dataType: string
+		lineageTag: f9496468-b32c-49a0-ab82-ca39beb6073f
+		summarizeBy: none
+		sourceColumn: ProductLine
+
+		annotation SummarizationSetBy = Automatic
+
+	column DealerPrice
+		dataType: double
+		lineageTag: 2e2a5398-09ec-4e60-ad1b-9fbd5bb677a1
+		summarizeBy: sum
+		sourceColumn: DealerPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Class
+		dataType: string
+		lineageTag: de26d4d7-a316-4dc9-b3a0-11cc58fb8580
+		summarizeBy: none
+		sourceColumn: Class
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModelName
+		dataType: string
+		lineageTag: 3ff1fc23-ef2c-40a4-b3e0-b61dfcfeb769
+		summarizeBy: none
+		sourceColumn: ModelName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 661fee68-e75e-4bfc-abcd-651205b5a580
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 2e879217-4e59-47c4-8aeb-e59d1cd8999f
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubCategory
+		dataType: string
+		lineageTag: 427701b1-ae97-4c40-87f8-f0022a979971
+		summarizeBy: none
+		sourceColumn: SubCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: bba17bb7-4296-428c-9cc2-fc1cc5d08c9d
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column StartDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 00c6705a-15e5-4467-baec-56042f48231a
+		summarizeBy: none
+		sourceColumn: StartDate
+
+		variation Variation
+			isDefault
+			relationship: 1ce8c769-2205-4203-bb63-1d991cd29e9f
+			defaultHierarchy: LocalDateTable_0c309d80-018b-442f-982c-494372d6f36f.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column EndDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 41acdc9a-f6ac-440a-ad65-f63cf01c5c0c
+		summarizeBy: none
+		sourceColumn: EndDate
+
+		variation Variation
+			isDefault
+			relationship: 9ce54088-f9f6-433f-9597-e3d17aaa2453
+			defaultHierarchy: LocalDateTable_ebe4d085-c7f4-4d3a-a665-bb9805baeb82.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Products = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+				    Products_Sheet = Source{[Item="Products",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Products_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductKey", Int64.Type}, {"ProductSubcategoryKey", Int64.Type}, {"ProductName", type text}, {"StandardCost", type number}, {"Color", type text}, {"SafetyStockLevel", Int64.Type}, {"ListPrice", type number}, {"Size", Int64.Type}, {"SizeRange", type text}, {"Weight", type number}, {"DaysToManufacture", Int64.Type}, {"ProductLine", type text}, {"DealerPrice", type number}, {"Class", type text}, {"ModelName", type text}, {"Description", type text}, {"Status", type text}, {"SubCategory", type text}, {"Category", type text}, {"StartDate", type date}, {"EndDate", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

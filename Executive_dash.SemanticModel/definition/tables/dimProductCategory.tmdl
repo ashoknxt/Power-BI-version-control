@@ -1,0 +1,58 @@
+table dimProductCategory
+	lineageTag: c514b87e-f7a1-4a91-a4ee-c889aa612b7b
+
+	column ProductCategoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 46dd7077-f0b1-4c3b-82a6-28b41612bf21
+		summarizeBy: none
+		sourceColumn: ProductCategoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductCategoryAlternateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: fc26ed68-ff10-4519-8955-46ea87cafeec
+		summarizeBy: none
+		sourceColumn: ProductCategoryAlternateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column EnglishProductCategoryName
+		dataType: string
+		lineageTag: c0f6ac02-b5d4-40e1-bcd7-8128b8c89317
+		summarizeBy: none
+		sourceColumn: EnglishProductCategoryName
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpanishProductCategoryName
+		dataType: string
+		lineageTag: ab7b06df-afd9-416f-94ae-6beadee3769f
+		summarizeBy: none
+		sourceColumn: SpanishProductCategoryName
+
+		annotation SummarizationSetBy = Automatic
+
+	column FrenchProductCategoryName
+		dataType: string
+		lineageTag: 73a84f60-1ecd-4031-9dc3-241f65378d90
+		summarizeBy: none
+		sourceColumn: FrenchProductCategoryName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dimProductCategory = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+				    dimProductCategory_Sheet = Source{[Item="dimProductCategory",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(dimProductCategory_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductCategoryKey", Int64.Type}, {"ProductCategoryAlternateKey", Int64.Type}, {"EnglishProductCategoryName", type text}, {"SpanishProductCategoryName", type text}, {"FrenchProductCategoryName", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

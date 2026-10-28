@@ -1,0 +1,49 @@
+table Territory
+	lineageTag: 9998a65a-2068-439f-8751-38bf3d120b43
+
+	column 'Territory Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: 243a2347-c8e4-473e-86e5-167c4690a17d
+		summarizeBy: count
+		sourceColumn: Territory Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 69f49db7-6ad6-4609-9e99-f7072e143b4b
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 3fec3d0f-60be-4e3c-a350-c729256b9483
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Group
+		dataType: string
+		lineageTag: 766cfdab-9731-48e9-9b5a-91cdc3ab72ba
+		summarizeBy: none
+		sourceColumn: Group
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Territory = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+				    Territory_Sheet = Source{[Item="Territory",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Territory_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Territory Key", Int64.Type}, {"Region", type text}, {"Country", type text}, {"Group", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

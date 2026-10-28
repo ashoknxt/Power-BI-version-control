@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Executive_dash"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0978b4f4-433b-4569-a700-4c9dbba4febb"
+  }
+}

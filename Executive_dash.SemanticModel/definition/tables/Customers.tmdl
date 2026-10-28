@@ -1,0 +1,156 @@
+table Customers
+	lineageTag: 00bc66a9-e4c6-4f2c-b1b3-7c56dd431f8a
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a4c6822-e079-4373-aded-4d9e9a74814d
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeographyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: c8d8f7f7-21a4-4c2e-8da0-dbfb25106968
+		summarizeBy: count
+		sourceColumn: GeographyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 977af368-89b6-4388-940c-8499fd76072c
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column BirthDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1b50503b-0185-4d25-9283-4f559c358cf7
+		summarizeBy: none
+		sourceColumn: BirthDate
+
+		variation Variation
+			isDefault
+			relationship: 1bc0e1b0-5924-4d3f-b078-080afac250e2
+			defaultHierarchy: LocalDateTable_46b9f6e5-b44e-4620-8ec6-fc94525c833e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column MaritalStatus
+		dataType: string
+		lineageTag: 3ed2871e-d92b-4d08-a05c-c24cab8b41d1
+		summarizeBy: none
+		sourceColumn: MaritalStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 417fd571-81a2-4665-870f-c1bde5b95506
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearlyIncome
+		dataType: int64
+		formatString: 0
+		lineageTag: 21ca76b3-145c-4d7b-b063-3a3a0638c6ff
+		summarizeBy: sum
+		sourceColumn: YearlyIncome
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumberChildrenAtHome
+		dataType: int64
+		formatString: 0
+		lineageTag: 05c4c373-877b-4fdc-8120-47ba1f211667
+		summarizeBy: sum
+		sourceColumn: NumberChildrenAtHome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Occupation
+		dataType: string
+		lineageTag: 94f3d741-7451-49cf-81a9-a22ecfc1944f
+		summarizeBy: none
+		sourceColumn: Occupation
+
+		annotation SummarizationSetBy = Automatic
+
+	column HouseOwnerFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d7ce3aa-0e1a-48f4-8de4-2aa8f72d15a8
+		summarizeBy: sum
+		sourceColumn: HouseOwnerFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumberCarsOwned
+		dataType: int64
+		formatString: 0
+		lineageTag: 0cfb7609-91b8-41cd-90bb-72f9f191e1f1
+		summarizeBy: sum
+		sourceColumn: NumberCarsOwned
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressLine1
+		dataType: string
+		lineageTag: 83b1e49b-a72e-414b-be10-f6441718848f
+		summarizeBy: none
+		sourceColumn: AddressLine1
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddressLine2
+		dataType: string
+		lineageTag: 4571b35a-0190-4cf9-a780-1ea9fb2dfac3
+		summarizeBy: none
+		sourceColumn: AddressLine2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Phone
+		dataType: string
+		lineageTag: 1f486d9d-404f-43e9-b8be-feac136c6c5f
+		summarizeBy: none
+		sourceColumn: Phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateFirstPurchase
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 710e0d2b-ac6e-453a-b872-5e331ec9d6f2
+		summarizeBy: none
+		sourceColumn: DateFirstPurchase
+
+		variation Variation
+			isDefault
+			relationship: 7029fb61-d0e1-4264-9a55-e40429da8667
+			defaultHierarchy: LocalDateTable_1ef8113e-059f-4d44-b337-f9889f313db5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customers = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+				    Customers_Sheet = Source{[Item="Customers",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Customers_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CustomerKey", Int64.Type}, {"GeographyKey", Int64.Type}, {"Name", type text}, {"BirthDate", type date}, {"MaritalStatus", type text}, {"Gender", type text}, {"YearlyIncome", Int64.Type}, {"NumberChildrenAtHome", Int64.Type}, {"Occupation", type text}, {"HouseOwnerFlag", Int64.Type}, {"NumberCarsOwned", Int64.Type}, {"AddressLine1", type text}, {"AddressLine2", type text}, {"Phone", type text}, {"DateFirstPurchase", type datetime}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

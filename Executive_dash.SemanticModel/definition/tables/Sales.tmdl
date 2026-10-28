@@ -1,0 +1,200 @@
+table Sales
+	lineageTag: 7d315c59-b366-4fa0-bcf7-8d67c307d94e
+
+	measure Tot_Sales_amt = SUM(Sales[SalesAmount])
+		displayFolder: Sales_measure
+		lineageTag: ed973c42-fc8b-4d77-bb9a-db3d1d9c1e93
+
+		formatStringDefinition = "#,##0"
+
+	measure PM_Sales =
+			CALCULATE(
+			                    [Tot_Sales_amt],
+			                    DATEADD('Calendar'[Date],-1,MONTH)
+			                    )
+		formatString: 0
+		displayFolder: Sales_measure
+		lineageTag: ecd963cd-6282-40c9-8932-8d0d7e0c0ebd
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b32c0340-990e-4913-a231-31b7f481b21d
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'OrderDate Key'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ebae89e-b560-45ab-a937-65d825a03507
+		summarizeBy: count
+		sourceColumn: OrderDate Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 4c775cea-7de9-45c1-bfe3-744188cea4f8
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: d06dfc0d-2cd5-4ff0-8c80-9f42364be32e
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesTerritoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 56ec64b3-d3be-4e14-a298-2203c49ab916
+		summarizeBy: count
+		sourceColumn: SalesTerritoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderNumber
+		dataType: string
+		lineageTag: eee90ea0-e4bf-4c32-8863-3598014dda8e
+		summarizeBy: none
+		sourceColumn: SalesOrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderLineNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 86edbcf3-a6b2-4b37-8999-641b49229a41
+		summarizeBy: sum
+		sourceColumn: SalesOrderLineNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 01cc4bfe-8ff8-4cf7-8439-78887cb3f6a2
+		summarizeBy: sum
+		sourceColumn: OrderQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: double
+		lineageTag: 9388afb3-0143-416d-9c04-bd9104c9ad6d
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ExtendedAmount
+		dataType: double
+		lineageTag: 7e942e12-f45a-4730-8b84-0da734262876
+		summarizeBy: sum
+		sourceColumn: ExtendedAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UnitPriceDiscountPct
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a287b4e-a332-43f1-b66b-44d4db4533d7
+		summarizeBy: sum
+		sourceColumn: UnitPriceDiscountPct
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiscountAmount
+		dataType: int64
+		formatString: 0
+		lineageTag: 255d6bbe-dd25-4ec9-965d-f6fc20c0dea5
+		summarizeBy: sum
+		sourceColumn: DiscountAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductStandardCost
+		dataType: double
+		lineageTag: 6b60b16b-44b8-4cb1-93c4-724835b3d606
+		summarizeBy: sum
+		sourceColumn: ProductStandardCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TotalProductCost
+		dataType: double
+		lineageTag: e0772de7-2f9b-446f-b2ca-e9b91a758f1b
+		summarizeBy: sum
+		sourceColumn: TotalProductCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SalesAmount
+		dataType: double
+		lineageTag: eef5b2a9-307b-4150-aa39-07f5ad14bb38
+		summarizeBy: sum
+		sourceColumn: SalesAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TaxAmt
+		dataType: double
+		lineageTag: a7f0f45f-27b5-4368-8128-e8702c4c87b9
+		summarizeBy: sum
+		sourceColumn: TaxAmt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Freight
+		dataType: double
+		lineageTag: 30479409-5608-4cc2-98f6-9b1b9d0dfdbd
+		summarizeBy: sum
+		sourceColumn: Freight
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RegionMonthID
+		dataType: string
+		lineageTag: 2a9fa7be-4e42-4ef1-a116-30dfddebf2c5
+		summarizeBy: none
+		sourceColumn: RegionMonthID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+				    Sales_Sheet = Source{[Item="Sales",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sales_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OrderDate", type date}, {"OrderDate Key", Int64.Type}, {"ProductKey", Int64.Type}, {"CustomerKey", Int64.Type}, {"SalesTerritoryKey", Int64.Type}, {"SalesOrderNumber", type text}, {"SalesOrderLineNumber", Int64.Type}, {"OrderQuantity", Int64.Type}, {"UnitPrice", type number}, {"ExtendedAmount", type number}, {"UnitPriceDiscountPct", Int64.Type}, {"DiscountAmount", Int64.Type}, {"ProductStandardCost", type number}, {"TotalProductCost", type number}, {"SalesAmount", type number}, {"TaxAmt", type number}, {"Freight", type number}, {"RegionMonthID", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

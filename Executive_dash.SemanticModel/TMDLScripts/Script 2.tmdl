@@ -1,0 +1,1641 @@
+createOrReplace
+
+	model Model
+		culture: en-US
+		defaultPowerBIDataSourceVersion: powerBI_V3
+		sourceQueryCulture: en-US
+		valueFilterBehavior: independent
+		dataAccessOptions
+			legacyRedirects
+			returnErrorValuesAsNull
+
+		table Budget
+			lineageTag: 62ead0c9-03a2-444d-9111-92ecc96f160a
+
+			column Category
+				dataType: string
+				lineageTag: 023c24bc-a333-414c-ad79-e56b2fc7fc06
+				summarizeBy: none
+				sourceColumn: Category
+
+				annotation SummarizationSetBy = Automatic
+
+			column Budget
+				dataType: int64
+				formatString: 0
+				lineageTag: 60bc755b-3649-49cc-8d46-008750f698be
+				summarizeBy: sum
+				sourceColumn: Budget
+
+				annotation SummarizationSetBy = Automatic
+
+			column Period
+				dataType: int64
+				formatString: 0
+				lineageTag: ecd72c67-2fb9-427f-9b49-f0d667412a17
+				summarizeBy: none
+				sourceColumn: Period
+
+				annotation SummarizationSetBy = Automatic
+
+			partition Budget = m
+				mode: import
+				source =
+						let
+						    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+						    Budget_Sheet = Source{[Item="Budget",Kind="Sheet"]}[Data],
+						    #"Promoted Headers" = Table.PromoteHeaders(Budget_Sheet, [PromoteAllScalars=true]),
+						    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Category", type text}, {"Budget", Int64.Type}, {"Period", Int64.Type}})
+						in
+						    #"Changed Type"
+
+			annotation PBI_ResultType = Table
+
+		table BudgetPeriod
+			lineageTag: 2eb5c0f9-8023-4530-80b7-12d6205865bd
+
+			column CalendarYear
+				dataType: int64
+				formatString: 0
+				lineageTag: 50adcf9c-28cd-4d53-823a-d22d693de86a
+				summarizeBy: sum
+				sourceColumn: CalendarYear
+
+				annotation SummarizationSetBy = Automatic
+
+			column MonthName
+				dataType: string
+				lineageTag: d5525bc0-cc07-45df-b342-9dea717014e0
+				summarizeBy: none
+				sourceColumn: MonthName
+
+				annotation SummarizationSetBy = Automatic
+
+			column 'Month Number'
+				dataType: int64
+				formatString: 0
+				lineageTag: 383fc017-ec69-4162-822a-c02d790954a0
+				summarizeBy: sum
+				sourceColumn: Month Number
+
+				annotation SummarizationSetBy = Automatic
+
+			column Period
+				dataType: int64
+				formatString: 0
+				lineageTag: 43ff20cf-f1cb-408b-ad49-5030cd0d6937
+				summarizeBy: none
+				sourceColumn: Period
+
+				annotation SummarizationSetBy = Automatic
+
+			partition BudgetPeriod = m
+				mode: import
+				source =
+						let
+						    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+						    BudgetPeriod_Sheet = Source{[Item="BudgetPeriod",Kind="Sheet"]}[Data],
+						    #"Promoted Headers" = Table.PromoteHeaders(BudgetPeriod_Sheet, [PromoteAllScalars=true]),
+						    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CalendarYear", Int64.Type}, {"MonthName", type text}, {"Month Number", Int64.Type}, {"Period", Int64.Type}})
+						in
+						    #"Changed Type"
+
+			annotation PBI_ResultType = Table
+
+		table Calendar
+			lineageTag: 2d4fb118-4eb6-4aab-b094-427c50046490
+			dataCategory: Time
+
+			column ID
+				dataType: int64
+				formatString: 0
+				lineageTag: a628fb42-ace2-43e7-9161-52f189a27889
+				summarizeBy: count
+				sourceColumn: ID
+
+				annotation SummarizationSetBy = Automatic
+
+			column Date
+				dataType: dateTime
+				isKey
+				formatString: Long Date
+				lineageTag: c813e3b1-4f65-40cb-b698-3cef84dc7228
+				summarizeBy: none
+				sourceColumn: Date
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation UnderlyingDateTimeDataType = Date
+
+			column DayNumberOfWeek
+				dataType: int64
+				formatString: 0
+				lineageTag: 8c740aff-b8d5-429c-b564-47a78089e408
+				summarizeBy: sum
+				sourceColumn: DayNumberOfWeek
+
+				annotation SummarizationSetBy = Automatic
+
+			column DayName
+				dataType: string
+				lineageTag: 32ec5c95-c92f-4a3f-aed4-bbb7d263f699
+				summarizeBy: none
+				sourceColumn: DayName
+
+				annotation SummarizationSetBy = Automatic
+
+			column MonthName
+				dataType: string
+				lineageTag: b65e9a97-da3e-4544-9792-7f9e6a3c9f74
+				summarizeBy: none
+				sourceColumn: MonthName
+				sortByColumn: MonthNumberOfYear
+
+				changedProperty = SortByColumn
+
+				annotation SummarizationSetBy = Automatic
+
+			column MonthNumberOfYear
+				dataType: int64
+				formatString: 0
+				lineageTag: cf31c6a8-5c11-457a-8614-9fe0cc68ec37
+				summarizeBy: sum
+				sourceColumn: MonthNumberOfYear
+
+				annotation SummarizationSetBy = Automatic
+
+			column DayNumberOfYear
+				dataType: int64
+				formatString: 0
+				lineageTag: b536f791-7c4d-4b6e-92ca-bb8f6abf6a17
+				summarizeBy: sum
+				sourceColumn: DayNumberOfYear
+
+				annotation SummarizationSetBy = Automatic
+
+			column WeekNumberOfYear
+				dataType: int64
+				formatString: 0
+				lineageTag: 18ec8f57-d2f5-4928-821b-7ef7907ba9f3
+				summarizeBy: sum
+				sourceColumn: WeekNumberOfYear
+
+				annotation SummarizationSetBy = Automatic
+
+			column CalendarQuarter
+				dataType: int64
+				formatString: 0
+				lineageTag: 346d5028-6b79-4e4b-8624-203e9ed30725
+				summarizeBy: sum
+				sourceColumn: CalendarQuarter
+
+				annotation SummarizationSetBy = Automatic
+
+			column CalendarYear
+				dataType: int64
+				formatString: 0
+				lineageTag: 1723c18b-84f3-4d4a-93a2-79f1aa1da7aa
+				summarizeBy: sum
+				sourceColumn: CalendarYear
+
+				annotation SummarizationSetBy = Automatic
+
+			column 'Fiscal Year'
+				dataType: int64
+				formatString: 0
+				lineageTag: e81f757d-db27-47ad-9701-78613cf6d5c2
+				summarizeBy: sum
+				sourceColumn: Fiscal Year
+
+				annotation SummarizationSetBy = Automatic
+
+			column FiscalQuarter
+				dataType: int64
+				formatString: 0
+				lineageTag: 76214035-eaf5-4fd3-bfc9-0b0044eb633a
+				summarizeBy: sum
+				sourceColumn: FiscalQuarter
+
+				annotation SummarizationSetBy = Automatic
+
+			column DayNumberOfMonth
+				dataType: int64
+				formatString: 0
+				lineageTag: 9b9b9d63-838d-46ef-8bf6-ea7407c24114
+				summarizeBy: sum
+				sourceColumn: DayNumberOfMonth
+
+				annotation SummarizationSetBy = Automatic
+
+			column FiscalSemester
+				dataType: int64
+				formatString: 0
+				lineageTag: f34f8aed-3039-474d-8c31-ab602f853a0a
+				summarizeBy: sum
+				sourceColumn: FiscalSemester
+
+				annotation SummarizationSetBy = Automatic
+
+			column Period
+				dataType: int64
+				formatString: 0
+				lineageTag: 18e290f7-827c-4c16-8000-78dc76084fda
+				summarizeBy: none
+				sourceColumn: Period
+
+				annotation SummarizationSetBy = Automatic
+
+			partition Calendar = m
+				mode: import
+				source =
+						let
+						    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+						    Calendar_Sheet = Source{[Item="Calendar",Kind="Sheet"]}[Data],
+						    #"Promoted Headers" = Table.PromoteHeaders(Calendar_Sheet, [PromoteAllScalars=true]),
+						    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ID", Int64.Type}, {"Date", type date}, {"DayNumberOfWeek", Int64.Type}, {"DayName", type text}, {"MonthName", type text}, {"MonthNumberOfYear", Int64.Type}, {"DayNumberOfYear", Int64.Type}, {"WeekNumberOfYear", Int64.Type}, {"CalendarQuarter", Int64.Type}, {"CalendarYear", Int64.Type}, {"Fiscal Year", Int64.Type}, {"FiscalQuarter", Int64.Type}, {"DayNumberOfMonth", Int64.Type}, {"FiscalSemester", Int64.Type}, {"Period", Int64.Type}})
+						in
+						    #"Changed Type"
+
+			annotation PBI_ResultType = Table
+
+		table DateTableTemplate_99b88117-dd07-40ae-92ff-62b3f2891716
+			isHidden
+			isPrivate
+			lineageTag: 45be0ff6-13b0-48f4-957a-97a8bbd36b49
+
+			column Date
+				dataType: dateTime
+				isHidden
+				formatString: General Date
+				lineageTag: 9661ecf4-eefe-4716-84e9-b4e284e94638
+				dataCategory: PaddedDateTableDates
+				summarizeBy: none
+				isNameInferred
+				sourceColumn: [Date]
+
+				annotation SummarizationSetBy = User
+
+			column Year = YEAR([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 12c3b3ff-7ffc-400e-b925-c5de6f341fa1
+				dataCategory: Years
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Year
+
+			column MonthNo = MONTH([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 8d0773d2-e857-4a7b-af74-3a9f66b5d9ed
+				dataCategory: MonthOfYear
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = MonthNumber
+
+			column Month = FORMAT([Date], "MMMM")
+				dataType: string
+				isHidden
+				lineageTag: af01de2e-2d03-448b-91bc-94e89302712a
+				dataCategory: Months
+				summarizeBy: none
+				sortByColumn: MonthNo
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Month
+
+			column QuarterNo = INT(([MonthNo] + 2) / 3)
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: f805f8bf-3c0d-4711-9e9e-b3bdc230130f
+				dataCategory: QuarterOfYear
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = QuarterNumber
+
+			column Quarter = "Qtr " & [QuarterNo]
+				dataType: string
+				isHidden
+				lineageTag: 623204fb-1434-4f3b-ba7e-19fb48671e9c
+				dataCategory: Quarters
+				summarizeBy: none
+				sortByColumn: QuarterNo
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Quarter
+
+			column Day = DAY([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: acb5e04b-cfc1-4b75-a159-65d6e3999715
+				dataCategory: DayOfMonth
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Day
+
+			hierarchy 'Date Hierarchy'
+				lineageTag: c8409844-f317-4ea7-86d9-6a35a4bc44e2
+
+				level Year
+					lineageTag: 03675275-26b6-4453-90f0-d4f49490829b
+					column: Year
+
+				level Quarter
+					lineageTag: c0685a1f-ca2e-4d68-975c-b60d31058a2c
+					column: Quarter
+
+				level Month
+					lineageTag: 660696d8-8ef9-4985-9685-48b4aaaa81e9
+					column: Month
+
+				level Day
+					lineageTag: 00ae2a34-efca-42a3-b77c-6a018f438fe4
+					column: Day
+
+				annotation TemplateId = DateHierarchy
+
+			partition DateTableTemplate_99b88117-dd07-40ae-92ff-62b3f2891716 = calculated
+				mode: import
+				source = Calendar(Date(2015,1,1), Date(2015,1,1))
+
+			annotation __PBI_TemplateDateTable = true
+
+			annotation DefaultItem = DateHierarchy
+
+		table Customers
+			lineageTag: 00bc66a9-e4c6-4f2c-b1b3-7c56dd431f8a
+
+			column CustomerKey
+				dataType: int64
+				formatString: 0
+				lineageTag: 0a4c6822-e079-4373-aded-4d9e9a74814d
+				summarizeBy: none
+				sourceColumn: CustomerKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column GeographyKey
+				dataType: int64
+				formatString: 0
+				lineageTag: c8d8f7f7-21a4-4c2e-8da0-dbfb25106968
+				summarizeBy: count
+				sourceColumn: GeographyKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column Name
+				dataType: string
+				lineageTag: 977af368-89b6-4388-940c-8499fd76072c
+				summarizeBy: none
+				sourceColumn: Name
+
+				annotation SummarizationSetBy = Automatic
+
+			column BirthDate
+				dataType: dateTime
+				formatString: Long Date
+				lineageTag: 1b50503b-0185-4d25-9283-4f559c358cf7
+				summarizeBy: none
+				sourceColumn: BirthDate
+
+				variation Variation
+					isDefault
+					relationship: 1bc0e1b0-5924-4d3f-b078-080afac250e2
+					defaultHierarchy: LocalDateTable_46b9f6e5-b44e-4620-8ec6-fc94525c833e.'Date Hierarchy'
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation UnderlyingDateTimeDataType = Date
+
+			column MaritalStatus
+				dataType: string
+				lineageTag: 3ed2871e-d92b-4d08-a05c-c24cab8b41d1
+				summarizeBy: none
+				sourceColumn: MaritalStatus
+
+				annotation SummarizationSetBy = Automatic
+
+			column Gender
+				dataType: string
+				lineageTag: 417fd571-81a2-4665-870f-c1bde5b95506
+				summarizeBy: none
+				sourceColumn: Gender
+
+				annotation SummarizationSetBy = Automatic
+
+			column YearlyIncome
+				dataType: int64
+				formatString: 0
+				lineageTag: 21ca76b3-145c-4d7b-b063-3a3a0638c6ff
+				summarizeBy: sum
+				sourceColumn: YearlyIncome
+
+				annotation SummarizationSetBy = Automatic
+
+			column NumberChildrenAtHome
+				dataType: int64
+				formatString: 0
+				lineageTag: 05c4c373-877b-4fdc-8120-47ba1f211667
+				summarizeBy: sum
+				sourceColumn: NumberChildrenAtHome
+
+				annotation SummarizationSetBy = Automatic
+
+			column Occupation
+				dataType: string
+				lineageTag: 94f3d741-7451-49cf-81a9-a22ecfc1944f
+				summarizeBy: none
+				sourceColumn: Occupation
+
+				annotation SummarizationSetBy = Automatic
+
+			column HouseOwnerFlag
+				dataType: int64
+				formatString: 0
+				lineageTag: 3d7ce3aa-0e1a-48f4-8de4-2aa8f72d15a8
+				summarizeBy: sum
+				sourceColumn: HouseOwnerFlag
+
+				annotation SummarizationSetBy = Automatic
+
+			column NumberCarsOwned
+				dataType: int64
+				formatString: 0
+				lineageTag: 0cfb7609-91b8-41cd-90bb-72f9f191e1f1
+				summarizeBy: sum
+				sourceColumn: NumberCarsOwned
+
+				annotation SummarizationSetBy = Automatic
+
+			column AddressLine1
+				dataType: string
+				lineageTag: 83b1e49b-a72e-414b-be10-f6441718848f
+				summarizeBy: none
+				sourceColumn: AddressLine1
+
+				annotation SummarizationSetBy = Automatic
+
+			column AddressLine2
+				dataType: string
+				lineageTag: 4571b35a-0190-4cf9-a780-1ea9fb2dfac3
+				summarizeBy: none
+				sourceColumn: AddressLine2
+
+				annotation SummarizationSetBy = Automatic
+
+			column Phone
+				dataType: string
+				lineageTag: 1f486d9d-404f-43e9-b8be-feac136c6c5f
+				summarizeBy: none
+				sourceColumn: Phone
+
+				annotation SummarizationSetBy = Automatic
+
+			column DateFirstPurchase
+				dataType: dateTime
+				formatString: General Date
+				lineageTag: 710e0d2b-ac6e-453a-b872-5e331ec9d6f2
+				summarizeBy: none
+				sourceColumn: DateFirstPurchase
+
+				variation Variation
+					isDefault
+					relationship: 7029fb61-d0e1-4264-9a55-e40429da8667
+					defaultHierarchy: LocalDateTable_1ef8113e-059f-4d44-b337-f9889f313db5.'Date Hierarchy'
+
+				annotation SummarizationSetBy = Automatic
+
+			partition Customers = m
+				mode: import
+				source =
+						let
+						    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+						    Customers_Sheet = Source{[Item="Customers",Kind="Sheet"]}[Data],
+						    #"Promoted Headers" = Table.PromoteHeaders(Customers_Sheet, [PromoteAllScalars=true]),
+						    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CustomerKey", Int64.Type}, {"GeographyKey", Int64.Type}, {"Name", type text}, {"BirthDate", type date}, {"MaritalStatus", type text}, {"Gender", type text}, {"YearlyIncome", Int64.Type}, {"NumberChildrenAtHome", Int64.Type}, {"Occupation", type text}, {"HouseOwnerFlag", Int64.Type}, {"NumberCarsOwned", Int64.Type}, {"AddressLine1", type text}, {"AddressLine2", type text}, {"Phone", type text}, {"DateFirstPurchase", type datetime}})
+						in
+						    #"Changed Type"
+
+			annotation PBI_ResultType = Table
+
+		table LocalDateTable_46b9f6e5-b44e-4620-8ec6-fc94525c833e
+			isHidden
+			showAsVariationsOnly
+			lineageTag: ae236863-fab0-47fa-a2f9-11bcc6e18706
+
+			column Date
+				dataType: dateTime
+				isHidden
+				formatString: General Date
+				lineageTag: 45ca1af8-9f66-43fe-ae0d-a9206c69dbd1
+				dataCategory: PaddedDateTableDates
+				summarizeBy: none
+				isNameInferred
+				sourceColumn: [Date]
+
+				annotation SummarizationSetBy = User
+
+			column Year = YEAR([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 221740b4-be1a-4116-af9f-24fd192fbef7
+				dataCategory: Years
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Year
+
+			column MonthNo = MONTH([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 16d8d364-2f4e-4ca4-89bc-f7ef11acf154
+				dataCategory: MonthOfYear
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = MonthNumber
+
+			column Month = FORMAT([Date], "MMMM")
+				dataType: string
+				isHidden
+				lineageTag: 088d9df8-4d7b-4725-8379-2bc745338a67
+				dataCategory: Months
+				summarizeBy: none
+				sortByColumn: MonthNo
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Month
+
+			column QuarterNo = INT(([MonthNo] + 2) / 3)
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 1a7b9a40-eacf-48ca-9f78-d1d06094770c
+				dataCategory: QuarterOfYear
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = QuarterNumber
+
+			column Quarter = "Qtr " & [QuarterNo]
+				dataType: string
+				isHidden
+				lineageTag: cd1c004d-cdbc-4d53-b69c-91ca150b4e8b
+				dataCategory: Quarters
+				summarizeBy: none
+				sortByColumn: QuarterNo
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Quarter
+
+			column Day = DAY([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 7e6a4a0d-0bab-4287-99d4-807bef7485f5
+				dataCategory: DayOfMonth
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Day
+
+			hierarchy 'Date Hierarchy'
+				lineageTag: 36c0c229-c01f-4f6f-9a8c-fd90465c38a4
+
+				level Year
+					lineageTag: f446bee3-9340-43b6-8ebf-18d4688ea3de
+					column: Year
+
+				level Quarter
+					lineageTag: c64c42e2-c418-449e-b465-e6c96fd719d3
+					column: Quarter
+
+				level Month
+					lineageTag: 4f2d87d2-a1d9-49b1-a763-1578ac7832c3
+					column: Month
+
+				level Day
+					lineageTag: b039574e-858a-47fb-b46b-136a66d556d8
+					column: Day
+
+				annotation TemplateId = DateHierarchy
+
+			partition LocalDateTable_46b9f6e5-b44e-4620-8ec6-fc94525c833e = calculated
+				mode: import
+				source = Calendar(Date(Year(MIN('Customers'[BirthDate])), 1, 1), Date(Year(MAX('Customers'[BirthDate])), 12, 31))
+
+			annotation __PBI_LocalDateTable = true
+
+		table LocalDateTable_1ef8113e-059f-4d44-b337-f9889f313db5
+			isHidden
+			showAsVariationsOnly
+			lineageTag: 0408b208-abfe-4ef4-8c96-82dd0eb7f0ac
+
+			column Date
+				dataType: dateTime
+				isHidden
+				formatString: General Date
+				lineageTag: 2b36c9d0-ac0a-4b95-92ff-45807c7d8acd
+				dataCategory: PaddedDateTableDates
+				summarizeBy: none
+				isNameInferred
+				sourceColumn: [Date]
+
+				annotation SummarizationSetBy = User
+
+			column Year = YEAR([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: eb67e118-f01f-4ccc-a4a3-d5a49dc1b0df
+				dataCategory: Years
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Year
+
+			column MonthNo = MONTH([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: c212fd65-2b6d-4314-9aaf-767e1eb54f5b
+				dataCategory: MonthOfYear
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = MonthNumber
+
+			column Month = FORMAT([Date], "MMMM")
+				dataType: string
+				isHidden
+				lineageTag: 7b696838-0fa7-425f-bbfb-d7f5f66e7ef2
+				dataCategory: Months
+				summarizeBy: none
+				sortByColumn: MonthNo
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Month
+
+			column QuarterNo = INT(([MonthNo] + 2) / 3)
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 1345634a-58da-49a1-bea0-045c09d7ee4b
+				dataCategory: QuarterOfYear
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = QuarterNumber
+
+			column Quarter = "Qtr " & [QuarterNo]
+				dataType: string
+				isHidden
+				lineageTag: b90f1b3a-295a-4249-b401-f24dc8fabbb6
+				dataCategory: Quarters
+				summarizeBy: none
+				sortByColumn: QuarterNo
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Quarter
+
+			column Day = DAY([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: e3ea123d-d983-44bc-b50d-ef8c4838afce
+				dataCategory: DayOfMonth
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Day
+
+			hierarchy 'Date Hierarchy'
+				lineageTag: 25ac27f4-1b62-45d9-bd59-cd0df243827d
+
+				level Year
+					lineageTag: 29ec0231-2d9f-46aa-8875-712ffea279dc
+					column: Year
+
+				level Quarter
+					lineageTag: 6b3fd332-63ab-41c8-9145-a25bf8d3d453
+					column: Quarter
+
+				level Month
+					lineageTag: b2c25812-82bf-46c1-9065-cf4eabfe1ceb
+					column: Month
+
+				level Day
+					lineageTag: deb791aa-bd42-456d-a8a9-035fe2e8d261
+					column: Day
+
+				annotation TemplateId = DateHierarchy
+
+			partition LocalDateTable_1ef8113e-059f-4d44-b337-f9889f313db5 = calculated
+				mode: import
+				source = Calendar(Date(Year(MIN('Customers'[DateFirstPurchase])), 1, 1), Date(Year(MAX('Customers'[DateFirstPurchase])), 12, 31))
+
+			annotation __PBI_LocalDateTable = true
+
+		table dimProductCategory
+			lineageTag: c514b87e-f7a1-4a91-a4ee-c889aa612b7b
+
+			column ProductCategoryKey
+				dataType: int64
+				formatString: 0
+				lineageTag: 46dd7077-f0b1-4c3b-82a6-28b41612bf21
+				summarizeBy: none
+				sourceColumn: ProductCategoryKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column ProductCategoryAlternateKey
+				dataType: int64
+				formatString: 0
+				lineageTag: fc26ed68-ff10-4519-8955-46ea87cafeec
+				summarizeBy: none
+				sourceColumn: ProductCategoryAlternateKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column EnglishProductCategoryName
+				dataType: string
+				lineageTag: c0f6ac02-b5d4-40e1-bcd7-8128b8c89317
+				summarizeBy: none
+				sourceColumn: EnglishProductCategoryName
+
+				annotation SummarizationSetBy = Automatic
+
+			column SpanishProductCategoryName
+				dataType: string
+				lineageTag: ab7b06df-afd9-416f-94ae-6beadee3769f
+				summarizeBy: none
+				sourceColumn: SpanishProductCategoryName
+
+				annotation SummarizationSetBy = Automatic
+
+			column FrenchProductCategoryName
+				dataType: string
+				lineageTag: 73a84f60-1ecd-4031-9dc3-241f65378d90
+				summarizeBy: none
+				sourceColumn: FrenchProductCategoryName
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dimProductCategory = m
+				mode: import
+				source =
+						let
+						    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+						    dimProductCategory_Sheet = Source{[Item="dimProductCategory",Kind="Sheet"]}[Data],
+						    #"Promoted Headers" = Table.PromoteHeaders(dimProductCategory_Sheet, [PromoteAllScalars=true]),
+						    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductCategoryKey", Int64.Type}, {"ProductCategoryAlternateKey", Int64.Type}, {"EnglishProductCategoryName", type text}, {"SpanishProductCategoryName", type text}, {"FrenchProductCategoryName", type text}})
+						in
+						    #"Changed Type"
+
+			annotation PBI_ResultType = Table
+
+		table dimProductSubCategory
+			lineageTag: 3f22dda5-bd81-4c1d-8114-814c0aa7dfb8
+
+			column ProductSubcategoryKey
+				dataType: int64
+				formatString: 0
+				lineageTag: a0c13c4b-d4ad-4782-91de-2206b4d7fffa
+				summarizeBy: none
+				sourceColumn: ProductSubcategoryKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column ProductSubcategoryAlternateKey
+				dataType: int64
+				formatString: 0
+				lineageTag: 02aaec22-ca15-4024-9d4b-fa636ce043af
+				summarizeBy: count
+				sourceColumn: ProductSubcategoryAlternateKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column EnglishProductSubcategoryName
+				dataType: string
+				lineageTag: d133581a-5072-42e1-b4cd-5eb8ad3ce816
+				summarizeBy: none
+				sourceColumn: EnglishProductSubcategoryName
+
+				annotation SummarizationSetBy = Automatic
+
+			column SpanishProductSubcategoryName
+				dataType: string
+				lineageTag: a623c5e2-88d6-4f39-8770-fff37379ec6c
+				summarizeBy: none
+				sourceColumn: SpanishProductSubcategoryName
+
+				annotation SummarizationSetBy = Automatic
+
+			column FrenchProductSubcategoryName
+				dataType: string
+				lineageTag: d3a07c16-d250-41f0-ac02-9b159a9b9d3e
+				summarizeBy: none
+				sourceColumn: FrenchProductSubcategoryName
+
+				annotation SummarizationSetBy = Automatic
+
+			column ProductCategoryKey
+				dataType: int64
+				formatString: 0
+				lineageTag: f2ef727a-3336-4c32-8a26-2dcd881c7cdf
+				summarizeBy: none
+				sourceColumn: ProductCategoryKey
+
+				annotation SummarizationSetBy = Automatic
+
+			partition dimProductSubCategory = m
+				mode: import
+				source =
+						let
+						    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+						    dimProductSubCategory_Sheet = Source{[Item="dimProductSubCategory",Kind="Sheet"]}[Data],
+						    #"Promoted Headers" = Table.PromoteHeaders(dimProductSubCategory_Sheet, [PromoteAllScalars=true]),
+						    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductSubcategoryKey", Int64.Type}, {"ProductSubcategoryAlternateKey", Int64.Type}, {"EnglishProductSubcategoryName", type text}, {"SpanishProductSubcategoryName", type text}, {"FrenchProductSubcategoryName", type text}, {"ProductCategoryKey", Int64.Type}})
+						in
+						    #"Changed Type"
+
+			annotation PBI_ResultType = Table
+
+		table Products
+			lineageTag: ae60145f-2ff8-46a9-85bb-a2b3e8cd0220
+
+			column ProductKey
+				dataType: int64
+				formatString: 0
+				lineageTag: be09dbd1-1324-497c-b221-5423c8a49665
+				summarizeBy: none
+				sourceColumn: ProductKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column ProductSubcategoryKey
+				dataType: int64
+				formatString: 0
+				lineageTag: 49bf136c-379e-45d3-8b46-9156818ee5c3
+				summarizeBy: none
+				sourceColumn: ProductSubcategoryKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column ProductName
+				dataType: string
+				lineageTag: bf5455e1-a0da-4561-9db3-8c88af7d6d50
+				summarizeBy: none
+				sourceColumn: ProductName
+
+				annotation SummarizationSetBy = Automatic
+
+			column StandardCost
+				dataType: double
+				lineageTag: a7d3bdb5-5dd2-4974-8af9-ba5f31f1f87f
+				summarizeBy: sum
+				sourceColumn: StandardCost
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column Color
+				dataType: string
+				lineageTag: 2b547b8e-6b48-4a7a-b720-912acff06221
+				summarizeBy: none
+				sourceColumn: Color
+
+				annotation SummarizationSetBy = Automatic
+
+			column SafetyStockLevel
+				dataType: int64
+				formatString: 0
+				lineageTag: d6733ef9-6734-4cc5-87b7-e825f2801441
+				summarizeBy: sum
+				sourceColumn: SafetyStockLevel
+
+				annotation SummarizationSetBy = Automatic
+
+			column ListPrice
+				dataType: double
+				lineageTag: 2b482d91-5474-49ba-80e6-86f0bf1164cd
+				summarizeBy: sum
+				sourceColumn: ListPrice
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column Size
+				dataType: int64
+				formatString: 0
+				lineageTag: 4d4342b3-9c7e-4176-93fe-0b450cfffa71
+				summarizeBy: sum
+				sourceColumn: Size
+
+				annotation SummarizationSetBy = Automatic
+
+			column SizeRange
+				dataType: string
+				lineageTag: 201a0f39-98eb-41b4-af41-f8b24542eef8
+				summarizeBy: none
+				sourceColumn: SizeRange
+
+				annotation SummarizationSetBy = Automatic
+
+			column Weight
+				dataType: double
+				lineageTag: 304ab3bf-1e5c-4dab-8acb-ccae2229362b
+				summarizeBy: sum
+				sourceColumn: Weight
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column DaysToManufacture
+				dataType: int64
+				formatString: 0
+				lineageTag: 44054725-3197-4443-8ffe-80123babb8b4
+				summarizeBy: sum
+				sourceColumn: DaysToManufacture
+
+				annotation SummarizationSetBy = Automatic
+
+			column ProductLine
+				dataType: string
+				lineageTag: f9496468-b32c-49a0-ab82-ca39beb6073f
+				summarizeBy: none
+				sourceColumn: ProductLine
+
+				annotation SummarizationSetBy = Automatic
+
+			column DealerPrice
+				dataType: double
+				lineageTag: 2e2a5398-09ec-4e60-ad1b-9fbd5bb677a1
+				summarizeBy: sum
+				sourceColumn: DealerPrice
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column Class
+				dataType: string
+				lineageTag: de26d4d7-a316-4dc9-b3a0-11cc58fb8580
+				summarizeBy: none
+				sourceColumn: Class
+
+				annotation SummarizationSetBy = Automatic
+
+			column ModelName
+				dataType: string
+				lineageTag: 3ff1fc23-ef2c-40a4-b3e0-b61dfcfeb769
+				summarizeBy: none
+				sourceColumn: ModelName
+
+				annotation SummarizationSetBy = Automatic
+
+			column Description
+				dataType: string
+				lineageTag: 661fee68-e75e-4bfc-abcd-651205b5a580
+				summarizeBy: none
+				sourceColumn: Description
+
+				annotation SummarizationSetBy = Automatic
+
+			column Status
+				dataType: string
+				lineageTag: 2e879217-4e59-47c4-8aeb-e59d1cd8999f
+				summarizeBy: none
+				sourceColumn: Status
+
+				annotation SummarizationSetBy = Automatic
+
+			column SubCategory
+				dataType: string
+				lineageTag: 427701b1-ae97-4c40-87f8-f0022a979971
+				summarizeBy: none
+				sourceColumn: SubCategory
+
+				annotation SummarizationSetBy = Automatic
+
+			column Category
+				dataType: string
+				lineageTag: bba17bb7-4296-428c-9cc2-fc1cc5d08c9d
+				summarizeBy: none
+				sourceColumn: Category
+
+				annotation SummarizationSetBy = Automatic
+
+			column StartDate
+				dataType: dateTime
+				formatString: Long Date
+				lineageTag: 00c6705a-15e5-4467-baec-56042f48231a
+				summarizeBy: none
+				sourceColumn: StartDate
+
+				variation Variation
+					isDefault
+					relationship: 1ce8c769-2205-4203-bb63-1d991cd29e9f
+					defaultHierarchy: LocalDateTable_0c309d80-018b-442f-982c-494372d6f36f.'Date Hierarchy'
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation UnderlyingDateTimeDataType = Date
+
+			column EndDate
+				dataType: dateTime
+				formatString: Long Date
+				lineageTag: 41acdc9a-f6ac-440a-ad65-f63cf01c5c0c
+				summarizeBy: none
+				sourceColumn: EndDate
+
+				variation Variation
+					isDefault
+					relationship: 9ce54088-f9f6-433f-9597-e3d17aaa2453
+					defaultHierarchy: LocalDateTable_ebe4d085-c7f4-4d3a-a665-bb9805baeb82.'Date Hierarchy'
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation UnderlyingDateTimeDataType = Date
+
+			partition Products = m
+				mode: import
+				source =
+						let
+						    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+						    Products_Sheet = Source{[Item="Products",Kind="Sheet"]}[Data],
+						    #"Promoted Headers" = Table.PromoteHeaders(Products_Sheet, [PromoteAllScalars=true]),
+						    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductKey", Int64.Type}, {"ProductSubcategoryKey", Int64.Type}, {"ProductName", type text}, {"StandardCost", type number}, {"Color", type text}, {"SafetyStockLevel", Int64.Type}, {"ListPrice", type number}, {"Size", Int64.Type}, {"SizeRange", type text}, {"Weight", type number}, {"DaysToManufacture", Int64.Type}, {"ProductLine", type text}, {"DealerPrice", type number}, {"Class", type text}, {"ModelName", type text}, {"Description", type text}, {"Status", type text}, {"SubCategory", type text}, {"Category", type text}, {"StartDate", type date}, {"EndDate", type date}})
+						in
+						    #"Changed Type"
+
+			annotation PBI_ResultType = Table
+
+		table LocalDateTable_0c309d80-018b-442f-982c-494372d6f36f
+			isHidden
+			showAsVariationsOnly
+			lineageTag: 24e94ccb-2bc8-44a1-80b7-0d7d2d9c81cf
+
+			column Date
+				dataType: dateTime
+				isHidden
+				formatString: General Date
+				lineageTag: 2de69065-ece7-4d5f-ae42-8a70995f3958
+				dataCategory: PaddedDateTableDates
+				summarizeBy: none
+				isNameInferred
+				sourceColumn: [Date]
+
+				annotation SummarizationSetBy = User
+
+			column Year = YEAR([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 35ac5f05-260a-4fc0-9ee0-bfc543a0fb67
+				dataCategory: Years
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Year
+
+			column MonthNo = MONTH([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 0ffbada3-9a99-4670-aea1-065844f03d97
+				dataCategory: MonthOfYear
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = MonthNumber
+
+			column Month = FORMAT([Date], "MMMM")
+				dataType: string
+				isHidden
+				lineageTag: 65663567-2f92-49ca-802a-0bd631e371a7
+				dataCategory: Months
+				summarizeBy: none
+				sortByColumn: MonthNo
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Month
+
+			column QuarterNo = INT(([MonthNo] + 2) / 3)
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: c780653f-f5b5-41b3-81b9-28bd2a73de62
+				dataCategory: QuarterOfYear
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = QuarterNumber
+
+			column Quarter = "Qtr " & [QuarterNo]
+				dataType: string
+				isHidden
+				lineageTag: 56acb169-bfcf-4601-afb9-7880e5bc3e86
+				dataCategory: Quarters
+				summarizeBy: none
+				sortByColumn: QuarterNo
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Quarter
+
+			column Day = DAY([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 0e6fefa4-47a9-401b-817b-aa5f66b7c161
+				dataCategory: DayOfMonth
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Day
+
+			hierarchy 'Date Hierarchy'
+				lineageTag: ebbbf9e7-c17f-4a65-9a43-ce6e26b88e0f
+
+				level Year
+					lineageTag: 29311d12-56bf-446a-9ed4-381829d68c07
+					column: Year
+
+				level Quarter
+					lineageTag: 8c26d15e-34f2-4935-a8e1-25fc991a48bc
+					column: Quarter
+
+				level Month
+					lineageTag: c42b07c3-7ec6-473c-b820-13a1c5263cae
+					column: Month
+
+				level Day
+					lineageTag: 26cec69d-79db-40b8-abe8-985bd2b93f57
+					column: Day
+
+				annotation TemplateId = DateHierarchy
+
+			partition LocalDateTable_0c309d80-018b-442f-982c-494372d6f36f = calculated
+				mode: import
+				source = Calendar(Date(Year(MIN('Products'[StartDate])), 1, 1), Date(Year(MAX('Products'[StartDate])), 12, 31))
+
+			annotation __PBI_LocalDateTable = true
+
+		table LocalDateTable_ebe4d085-c7f4-4d3a-a665-bb9805baeb82
+			isHidden
+			showAsVariationsOnly
+			lineageTag: be9e1c1a-9c05-45bd-9970-dbc30621de7e
+
+			column Date
+				dataType: dateTime
+				isHidden
+				formatString: General Date
+				lineageTag: 4c87255a-9aa9-4a9e-b0ca-074426509126
+				dataCategory: PaddedDateTableDates
+				summarizeBy: none
+				isNameInferred
+				sourceColumn: [Date]
+
+				annotation SummarizationSetBy = User
+
+			column Year = YEAR([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: f492856b-8106-4fd5-b040-ce93b52e4335
+				dataCategory: Years
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Year
+
+			column MonthNo = MONTH([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: e7aef81a-a13e-4502-bdbf-9ef5259abdbf
+				dataCategory: MonthOfYear
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = MonthNumber
+
+			column Month = FORMAT([Date], "MMMM")
+				dataType: string
+				isHidden
+				lineageTag: aa71eeed-04fa-43a6-921a-33962a37a61c
+				dataCategory: Months
+				summarizeBy: none
+				sortByColumn: MonthNo
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Month
+
+			column QuarterNo = INT(([MonthNo] + 2) / 3)
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 8f124b6a-8332-4a3c-a504-a9600f875c66
+				dataCategory: QuarterOfYear
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = QuarterNumber
+
+			column Quarter = "Qtr " & [QuarterNo]
+				dataType: string
+				isHidden
+				lineageTag: 4e70bc42-36a9-409b-9020-49e08aa0cf4e
+				dataCategory: Quarters
+				summarizeBy: none
+				sortByColumn: QuarterNo
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Quarter
+
+			column Day = DAY([Date])
+				dataType: int64
+				isHidden
+				formatString: 0
+				lineageTag: 0df8e54a-a7e8-4ede-adc4-4b1b16f19d42
+				dataCategory: DayOfMonth
+				summarizeBy: none
+
+				annotation SummarizationSetBy = User
+
+				annotation TemplateId = Day
+
+			hierarchy 'Date Hierarchy'
+				lineageTag: 06769652-1b02-4807-8f9e-a761d5672ee0
+
+				level Year
+					lineageTag: f0581c29-ea23-4c8b-a5ba-b9991e566455
+					column: Year
+
+				level Quarter
+					lineageTag: abd2e881-e62b-4b6c-9566-fad6130ced72
+					column: Quarter
+
+				level Month
+					lineageTag: 197a1d32-9d35-4802-9dff-ab5f3d18d81e
+					column: Month
+
+				level Day
+					lineageTag: 96b11640-901b-4a83-935d-487d5f14887d
+					column: Day
+
+				annotation TemplateId = DateHierarchy
+
+			partition LocalDateTable_ebe4d085-c7f4-4d3a-a665-bb9805baeb82 = calculated
+				mode: import
+				source = Calendar(Date(Year(MIN('Products'[EndDate])), 1, 1), Date(Year(MAX('Products'[EndDate])), 12, 31))
+
+			annotation __PBI_LocalDateTable = true
+
+		table Sales
+			lineageTag: 7d315c59-b366-4fa0-bcf7-8d67c307d94e
+
+			measure Tot_Sales_amt = SUM(Sales[SalesAmount])
+				displayFolder: Sales_measure
+				lineageTag: ed973c42-fc8b-4d77-bb9a-db3d1d9c1e93
+
+				formatStringDefinition = "#,##0"
+
+			measure PM_Sales =
+					CALCULATE(
+					                    [Tot_Sales_amt],
+					                    DATEADD('Calendar'[Date],-1,MONTH)
+					                    )
+				formatString: 0
+				displayFolder: Sales_measure
+				lineageTag: ecd963cd-6282-40c9-8932-8d0d7e0c0ebd
+
+			column OrderDate
+				dataType: dateTime
+				formatString: Long Date
+				lineageTag: b32c0340-990e-4913-a231-31b7f481b21d
+				summarizeBy: none
+				sourceColumn: OrderDate
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation UnderlyingDateTimeDataType = Date
+
+			column 'OrderDate Key'
+				dataType: int64
+				formatString: 0
+				lineageTag: 7ebae89e-b560-45ab-a937-65d825a03507
+				summarizeBy: count
+				sourceColumn: OrderDate Key
+
+				annotation SummarizationSetBy = Automatic
+
+			column ProductKey
+				dataType: int64
+				formatString: 0
+				lineageTag: 4c775cea-7de9-45c1-bfe3-744188cea4f8
+				summarizeBy: none
+				sourceColumn: ProductKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column CustomerKey
+				dataType: int64
+				formatString: 0
+				lineageTag: d06dfc0d-2cd5-4ff0-8c80-9f42364be32e
+				summarizeBy: none
+				sourceColumn: CustomerKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column SalesTerritoryKey
+				dataType: int64
+				formatString: 0
+				lineageTag: 56ec64b3-d3be-4e14-a298-2203c49ab916
+				summarizeBy: count
+				sourceColumn: SalesTerritoryKey
+
+				annotation SummarizationSetBy = Automatic
+
+			column SalesOrderNumber
+				dataType: string
+				lineageTag: eee90ea0-e4bf-4c32-8863-3598014dda8e
+				summarizeBy: none
+				sourceColumn: SalesOrderNumber
+
+				annotation SummarizationSetBy = Automatic
+
+			column SalesOrderLineNumber
+				dataType: int64
+				formatString: 0
+				lineageTag: 86edbcf3-a6b2-4b37-8999-641b49229a41
+				summarizeBy: sum
+				sourceColumn: SalesOrderLineNumber
+
+				annotation SummarizationSetBy = Automatic
+
+			column OrderQuantity
+				dataType: int64
+				formatString: 0
+				lineageTag: 01cc4bfe-8ff8-4cf7-8439-78887cb3f6a2
+				summarizeBy: sum
+				sourceColumn: OrderQuantity
+
+				annotation SummarizationSetBy = Automatic
+
+			column UnitPrice
+				dataType: double
+				lineageTag: 9388afb3-0143-416d-9c04-bd9104c9ad6d
+				summarizeBy: sum
+				sourceColumn: UnitPrice
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column ExtendedAmount
+				dataType: double
+				lineageTag: 7e942e12-f45a-4730-8b84-0da734262876
+				summarizeBy: sum
+				sourceColumn: ExtendedAmount
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column UnitPriceDiscountPct
+				dataType: int64
+				formatString: 0
+				lineageTag: 1a287b4e-a332-43f1-b66b-44d4db4533d7
+				summarizeBy: sum
+				sourceColumn: UnitPriceDiscountPct
+
+				annotation SummarizationSetBy = Automatic
+
+			column DiscountAmount
+				dataType: int64
+				formatString: 0
+				lineageTag: 255d6bbe-dd25-4ec9-965d-f6fc20c0dea5
+				summarizeBy: sum
+				sourceColumn: DiscountAmount
+
+				annotation SummarizationSetBy = Automatic
+
+			column ProductStandardCost
+				dataType: double
+				lineageTag: 6b60b16b-44b8-4cb1-93c4-724835b3d606
+				summarizeBy: sum
+				sourceColumn: ProductStandardCost
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column TotalProductCost
+				dataType: double
+				lineageTag: e0772de7-2f9b-446f-b2ca-e9b91a758f1b
+				summarizeBy: sum
+				sourceColumn: TotalProductCost
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column SalesAmount
+				dataType: double
+				lineageTag: eef5b2a9-307b-4150-aa39-07f5ad14bb38
+				summarizeBy: sum
+				sourceColumn: SalesAmount
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column TaxAmt
+				dataType: double
+				lineageTag: a7f0f45f-27b5-4368-8128-e8702c4c87b9
+				summarizeBy: sum
+				sourceColumn: TaxAmt
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column Freight
+				dataType: double
+				lineageTag: 30479409-5608-4cc2-98f6-9b1b9d0dfdbd
+				summarizeBy: sum
+				sourceColumn: Freight
+
+				annotation SummarizationSetBy = Automatic
+
+				annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+			column RegionMonthID
+				dataType: string
+				lineageTag: 2a9fa7be-4e42-4ef1-a116-30dfddebf2c5
+				summarizeBy: none
+				sourceColumn: RegionMonthID
+
+				annotation SummarizationSetBy = Automatic
+
+			partition Sales = m
+				mode: import
+				source =
+						let
+						    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+						    Sales_Sheet = Source{[Item="Sales",Kind="Sheet"]}[Data],
+						    #"Promoted Headers" = Table.PromoteHeaders(Sales_Sheet, [PromoteAllScalars=true]),
+						    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OrderDate", type date}, {"OrderDate Key", Int64.Type}, {"ProductKey", Int64.Type}, {"CustomerKey", Int64.Type}, {"SalesTerritoryKey", Int64.Type}, {"SalesOrderNumber", type text}, {"SalesOrderLineNumber", Int64.Type}, {"OrderQuantity", Int64.Type}, {"UnitPrice", type number}, {"ExtendedAmount", type number}, {"UnitPriceDiscountPct", Int64.Type}, {"DiscountAmount", Int64.Type}, {"ProductStandardCost", type number}, {"TotalProductCost", type number}, {"SalesAmount", type number}, {"TaxAmt", type number}, {"Freight", type number}, {"RegionMonthID", type text}})
+						in
+						    #"Changed Type"
+
+			annotation PBI_ResultType = Table
+
+		table Territory
+			lineageTag: 9998a65a-2068-439f-8751-38bf3d120b43
+
+			column 'Territory Key'
+				dataType: int64
+				formatString: 0
+				lineageTag: 243a2347-c8e4-473e-86e5-167c4690a17d
+				summarizeBy: count
+				sourceColumn: Territory Key
+
+				annotation SummarizationSetBy = Automatic
+
+			column Region
+				dataType: string
+				lineageTag: 69f49db7-6ad6-4609-9e99-f7072e143b4b
+				summarizeBy: none
+				sourceColumn: Region
+
+				annotation SummarizationSetBy = Automatic
+
+			column Country
+				dataType: string
+				lineageTag: 3fec3d0f-60be-4e3c-a350-c729256b9483
+				summarizeBy: none
+				sourceColumn: Country
+
+				annotation SummarizationSetBy = Automatic
+
+			column Group
+				dataType: string
+				lineageTag: 766cfdab-9731-48e9-9b5a-91cdc3ab72ba
+				summarizeBy: none
+				sourceColumn: Group
+
+				annotation SummarizationSetBy = Automatic
+
+			partition Territory = m
+				mode: import
+				source =
+						let
+						    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+						    Territory_Sheet = Source{[Item="Territory",Kind="Sheet"]}[Data],
+						    #"Promoted Headers" = Table.PromoteHeaders(Territory_Sheet, [PromoteAllScalars=true]),
+						    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Territory Key", Int64.Type}, {"Region", type text}, {"Country", type text}, {"Group", type text}})
+						in
+						    #"Changed Type"
+
+			annotation PBI_ResultType = Table
+
+		relationship 1bc0e1b0-5924-4d3f-b078-080afac250e2
+			joinOnDateBehavior: datePartOnly
+			fromColumn: Customers.BirthDate
+			toColumn: LocalDateTable_46b9f6e5-b44e-4620-8ec6-fc94525c833e.Date
+
+		relationship 7029fb61-d0e1-4264-9a55-e40429da8667
+			joinOnDateBehavior: datePartOnly
+			fromColumn: Customers.DateFirstPurchase
+			toColumn: LocalDateTable_1ef8113e-059f-4d44-b337-f9889f313db5.Date
+
+		relationship 1ce8c769-2205-4203-bb63-1d991cd29e9f
+			joinOnDateBehavior: datePartOnly
+			fromColumn: Products.StartDate
+			toColumn: LocalDateTable_0c309d80-018b-442f-982c-494372d6f36f.Date
+
+		relationship 9ce54088-f9f6-433f-9597-e3d17aaa2453
+			joinOnDateBehavior: datePartOnly
+			fromColumn: Products.EndDate
+			toColumn: LocalDateTable_ebe4d085-c7f4-4d3a-a665-bb9805baeb82.Date
+
+		relationship AutoDetected_048b621c-9213-4325-9813-eb1122efa20d
+			fromColumn: Budget.Period
+			toColumn: BudgetPeriod.Period
+
+		relationship AutoDetected_8164c1f8-30e8-47e3-bd0b-01e7ddcd6b77
+			fromColumn: Calendar.Period
+			toColumn: BudgetPeriod.Period
+
+		relationship AutoDetected_5c8e605b-47b0-42ef-b771-3c4c8a1293b9
+			fromColumn: Sales.CustomerKey
+			toColumn: Customers.CustomerKey
+
+		relationship AutoDetected_061614b3-1b78-4cfa-b7bf-40f385aa0187
+			fromColumn: dimProductSubCategory.ProductCategoryKey
+			toColumn: dimProductCategory.ProductCategoryKey
+
+		relationship AutoDetected_69f459fa-7215-41ed-b4cb-9ff2f6cb03a1
+			fromColumn: Products.ProductSubcategoryKey
+			toColumn: dimProductSubCategory.ProductSubcategoryKey
+
+		relationship AutoDetected_b01714f4-988b-4dd4-8c80-6c56eca988ea
+			fromColumn: Sales.ProductKey
+			toColumn: Products.ProductKey
+
+		relationship d0e2ce35-ee2b-e3b0-8cff-39bec869e9bd
+			fromColumn: Sales.OrderDate
+			toColumn: Calendar.Date
+
+		cultureInfo en-US
+
+		annotation __PBI_TimeIntelligenceEnabled = 1
+
+		annotation PBI_QueryOrder = ["Budget","BudgetPeriod","Calendar","Customers","dimProductCategory","dimProductSubCategory","Products","Sales","Territory"]
+
+		annotation PBI_ProTooling = ["DevMode","TMDLView_Desktop"]
+

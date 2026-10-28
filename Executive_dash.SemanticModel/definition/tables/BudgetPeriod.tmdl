@@ -1,0 +1,51 @@
+table BudgetPeriod
+	lineageTag: 2eb5c0f9-8023-4530-80b7-12d6205865bd
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 50adcf9c-28cd-4d53-823a-d22d693de86a
+		summarizeBy: sum
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: d5525bc0-cc07-45df-b342-9dea717014e0
+		summarizeBy: none
+		sourceColumn: MonthName
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 383fc017-ec69-4162-822a-c02d790954a0
+		summarizeBy: sum
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period
+		dataType: int64
+		formatString: 0
+		lineageTag: 43ff20cf-f1cb-408b-ad49-5030cd0d6937
+		summarizeBy: none
+		sourceColumn: Period
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BudgetPeriod = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("D:\Books\AdventureWorks 2020.xlsx"), null, true),
+				    BudgetPeriod_Sheet = Source{[Item="BudgetPeriod",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(BudgetPeriod_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CalendarYear", Int64.Type}, {"MonthName", type text}, {"Month Number", Int64.Type}, {"Period", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
